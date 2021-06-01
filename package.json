@@ -1,0 +1,21 @@
+{
+  "name": "password-manager",
+  "version": "1.0.0",
+  "description": "",
+  "main": "root/backend/main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pkdiv/Password-Manager.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/pkdiv/Password-Manager/issues"
+  },
+  "homepage": "https://github.com/pkdiv/Password-Manager#readme",
+  "dependencies": {
+    "electron": "^13.0.1"
+  }
+}
