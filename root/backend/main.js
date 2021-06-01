@@ -20,12 +20,16 @@ function createWindow(){
   win.loadURL(url.format({
     pathname: path.join(__dirname, '../UI/ui.html'),
     protocol: 'file',
-    slashes: true
+    slashes: true,
+    width:800,
+    height:800
   }));
 
 // Developer tools
 // TODO: Remove before packaging
   win.webContents.openDevTools();
+
+
   win.on('closed', ()=> {
     win = null;
     })

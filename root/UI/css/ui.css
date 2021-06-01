@@ -1,0 +1,22 @@
+body{
+  text-align: center;
+
+}
+
+.heading{
+  margin-top: 4rem;
+}
+
+.mod-inp{
+  width: 30rem;
+  margin: 5rem auto 2rem;
+}
+
+.mod-inp-password{
+  width: 30rem;
+  margin: auto;
+}
+
+.mod-btn{
+  margin-top: 3rem;
+}
