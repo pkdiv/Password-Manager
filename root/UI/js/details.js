@@ -16,8 +16,20 @@ var Record = class {
     }
 }
 
+
+var hash = (webLink) => {
+  let id = 0;
+  let arr = webLink.split(".")
+  for(var i = 0; i < arr[1].length; i++){
+    id += arr[1].charCodeAt(i)
+  }
+  id = id % 1000
+  return id
+}
+
 // Record Structure
 // url|username|password$url|username|password\n
+
 const file = '..\\Password-Manager\\datafile.txt'
 // 1. Apply hashing function
 // 2. Insert the record
