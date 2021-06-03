@@ -1,0 +1,5 @@
+a|b|c
+a|b|c
+a|b|c
+$amazon.com|abc@email.com|1234
+$amazon.com|abc@email.com|1234$amazon.com|abc@email.com|1234
