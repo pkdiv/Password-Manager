@@ -123,7 +123,7 @@ function deleteRecord = () => {
   //displayRecords
   let id = hash(url)
 
-  unpackBuckets() // stored in r[]
+  unpackBuckets()
 
   let bucket = fileDataline[id]
   let records = unpackFields(bucket)
