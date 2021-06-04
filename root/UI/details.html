@@ -5,7 +5,6 @@
     <script src="./js/details.js" charset="utf-8"></script>
   </head>
   <body>
-    <!-- <form class="" action="index.htm" method="post"> -->
     <form>
       <label for="">url</label>
       <input id=url type="text" name="url" value="">
@@ -13,8 +12,35 @@
       <input id=username type="" name="" value="">
       <label for="">password</label>
       <input id=password type="password" name="" value="">
-      <button type="submit" name="button" onclick="insertRecord()">submit</button>
-
+      <button type="submit" name="button" onclick="insertRecord()">Add</button>
+    </form>
+    <form >
+      <label>url</label>
+      <input type="text"  name="" value="">
+      <button type="submit" onclick="search()" name="button">Search</button>
+    </form>
+    <form >
+      <span>Search</span>
+      <br>
+      <label for="">Url</label>
+      <input type="text" name="" value="">
+      <br>
+      <span>New data</span>
+      <br>
+      <label>Url</label>
+      <input type="type">
+      <label for="">username</label>
+      <input id=username type="" name="" value="">
+      <label for="">password</label>
+      <input id=password type="password" name="" value="">
+      <button type="submit" onclick="modify()" name="button">Modify</button>
+    </form>
+    <form>
+      <span>Delete</span>
+      <br>
+      <label for="">url</label>
+      <input id=username type="" name="" value="">
+      <button type="button" onclick="delete()" name="button">Delete</button>
     </form>
   </body>
 </html>

@@ -1,135 +1,148 @@
-const {appendFile, readFileSync, write, openSync, createWriteStream} = require('fs');
-// const {createInterface} = require('readLine')
-// const lineByLine = require('n-readlines');
+const {
+  appendFile,
+  readFileSync,
+  write,
+  openSync,
+  createWriteStream
+} = require('fs');
 
-var Details = class {
-    constructor(url,username,password){
-        this.url = url
-        this.username = username
-        this.password = password
-    }
-}
+// Record Structure
+// url|username|password$url|username|password$url|username|password\n
+// UI/datafile.txt
+const file = __dirname + 'datafile.txt'
+var fileDataline = []
 
 var Record = class {
-    constructor(record) {
-        this.record = record
-    }
+  constructor(url, username, password) {
+    this.url = url
+    this.username = username
+    this.password = password
+  }
+}
+
+var Bucket = class {
+  constructor(record) {
+    this.bucket = bucket
+  }
 }
 
 
-var hash = (webLink) => {
+function hash(webLink) {
   let id = 0;
   let arr = webLink.split(".")
-  for(var i = 0; i < arr[1].length; i++){
+  for (var i = 0; i < arr[1].length; i++) {
     id += arr[1].charCodeAt(i)
   }
   id = id % 1000
   return id
 }
 
-// Record Structure
-// url|username|password$url|username|password\n
+function insertRecord() {
+  // let url = document.getElementById("url").value
+  // let username = document.getElementById("username").value
+  // let password = document.getElementById("password").value
+  // let recordPos = hash(url)
+  let url = 'www.amazon.com'
+  let username = 'abcd@email.com'
+  let password = '1234'
+  let recordPos = 4
+  var r_buf = new Bucket(url + '|' + username + '|' + password) // Converts user input into a bucket object
 
-const file = '..\\Password-Manager\\datafile.txt'
-// 1. Apply hashing function
-// 2. Insert the record
+  unpackBuckets()
 
-// var r = [], d1 = []
-var r = []
-
-// TODO : Change the file path
-var packRecords = () => {
-    let writer = createWriteStream(file)
-
-    for(let i=0;i<r.length;i++){
-        if(!r[i])
-            writer.write('\n')
-        else
-            writer.write(r[i].record+"\n")
+  if (!fileDataline[recordPos]) {
+    fileDataline[recordPos] = new Bucket(r_buf.bucket)
+  } else {
+    if (isDuplicate(r_buf, fileDataline[recordPos])) {
+      console.log('Duplicate entries not allowed.')
+      return
     }
-}
+    fileDataline[recordPos].bucket = fileDataline[recordPos].bucket.replace(/(\r?\n)|(\r)|(\n)/g, ''); // Handles weird characters
+    fileDataline[recordPos].bucket += '$' + r_buf.bucket
+  }
 
-var unpackRecords = () => {
-    buffer = readFileSync(file,'utf-8')
-    records = buffer.split('\n')
-    for(var i=0; i<records.length-1; i++){
-        // console.log(`Iteration-${i}`)
-        r[i] = new Record(records[i]) // Add the whole line
-        // record = records[i].split('$');
-        // console.log(JSON.stringify(record))
-        // for(var j=0; j<records.length-1; j++){
-        //   item = record[j].split('|')
-        //   d1[i][j] = new Details(item[0],item[1],item[2])
-        // }
-    }
-}
-
-var unpackFields = (r) => {
-    // record is of type Record
-    var r1 = []
-    var records = r.record.split('$')
-    // console.log(`Records: ${records}`)
-    for (let i=0;i<records.length;i++) {
-        // console.log(`Record: ${records[i]}`)
-        var fields = records[i].split('|')
-        // console.log(fields)
-        var newRecord = new Details(fields[0],fields[1],fields[2])
-        r1.push(newRecord)
-    }
-    return r1
-}
-
-var isDuplicate = (r_buf, record) => {
-    var r1 = unpackFields(record) // return of type Details
-    var uname = r_buf.record.split('|')[1]
-
-    for(let i=0;i<r1.length;i++){
-        if(uname===r1[i].username)
-          return true
-    }
-    return false
+  packBuckets()
 
 }
 
-var insertRecord = () => {
-    // let url = document.getElementById("url").value
-    // let username = document.getElementById("username").value
-    // let password = document.getElementById("password").value
-    // let recordPos = hash(url)
-    let url = 'amazon.com'
-    let username = 'abcd@email.com'
-    let password = '1234'
-    let recordPos = 4
-    // d1.push(new Details(url, username, password))
-    var r_buf = new Record(url+'|'+username+'|'+password)
-
-    unpackRecords()
-    // console.log("original - "+r[5].record)
-
-    if(!r[recordPos]){
-        r[recordPos] = new Record('$'+r_buf.record)
-    }
-    else {
-        // check for duplicate entry
-        if(isDuplicate(r_buf, r[recordPos])) {
-            console.log('Duplicate entries not allowed.')
-            return
-        }
-        r[recordPos].record = r[recordPos].record.replace(/(\r?\n)|(\r)|(\n)/g, '');
-        // console.log(JSON.stringify(r[recordPos].record))
-        r[recordPos].record += '$'+r_buf.record
-        // console.log(JSON.stringify(r[recordPos].record))
-    }
-
-    // console.log(d1[recordPos].buffer)
-    packRecords()
+function unpackBuckets() {
+  buffer = readFileSync(file, 'utf-8')
+  buckets = buffer.split('\n')
+  for (i = 0; i < buckets.length - 1; i++) {
+    fileDataline[i] = new Bucket(buckets[i])
+  }
 }
 
-// TODO : replace it with proper field
-var displayRecords = () => {
-    var d1 = unpack();
-    // console.log('USN\tName\tBranch')
-    // for(var i=0; i<s1.length; i++){
-    //     console.log(s1[i].usn,'\t',s1[i].name,'\t', s1[i].branch)
-    // }
+function unpackFields(bkt) {
+  var recObjectArray = []
+  var rawRecords = bkt.bucket.split('$')
+
+  for (let i = 0; i < rawRecords.length; i++) {
+    var fields = rawRecords[i].split('|')
+    var newRecord = new Record(fields[0], fields[1], fields[2])
+    recObjectArray.push(newRecord) // Array of json objects(Record class objects)
+  }
+  return recObjectArray
+}
+
+function packBuckets() {
+  // Uses Global r Array
+  let writer = createWriteStream(file)
+  for (let i = 0; i < fileDataline.length; i++) {
+    if (!fileDataline[i])
+      writer.write('\n')
+    else
+      writer.write(fileDataline[i].bucket + "\n")
+  }
+}
+
+function packFields(records) {
+  let bucketBuffer = ''
+  for (i = 0; i < n; i++) {
+    if (records[i].username === '')
+      continue
+    bucketBuffer += records[i].url + '|' + records[i].username + '|' + records[i].password + '$'
+  }
+  return bucketBuffer.slice(0, -1)
+}
+
+function isDuplicate(r_buf, record){
+  var recordObjects = unpackFields(record) // return of type Details
+  var uname = r_buf.bucket.split('|')[1]
+
+  for (let i = 0; i < recordObjects.length; i++) {
+    if (uname === recordObjects[i].username)
+      return true
+  }
+  return false
+}
+
+function deleteRecord = () => {
+  let url = 'www.amazon.com'
+  let username = 'abc@email.com'
+  //displayRecords
+  let id = hash(url)
+
+  unpackBuckets() // stored in r[]
+
+  let bucket = fileDataline[id]
+  let records = unpackFields(bucket)
+
+  for (i = 0; i < records.length; i++) {
+    if (username === records[i].username && url === records[i].url) {
+      // delete record[i]
+      records[i].username = ""
+      // pack each detail object into one bucket
+      packRecords()
+    }
+  }
+}
+
+function modifyRecord() {
+
+}
+
+function displayRecords(bucket) {
+  var records = unpackBuckets(bucket)
+
 }
