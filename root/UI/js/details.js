@@ -18,13 +18,13 @@ var Record = class {
 
 
 var hash = (webLink) => {
-  let id = 0;
-  let arr = webLink.split(".")
-  for(var i = 0; i < arr[1].length; i++){
-    id += arr[1].charCodeAt(i)
-  }
-  id = id % 1000
-  return id
+    let id = 0;
+    let arr = webLink.split(".")
+    for(var i = 0; i < arr[1].length; i++){
+      id += arr[1].charCodeAt(i)
+    }
+    id = id % 1000
+    return id
 }
 
 // Record Structure
@@ -79,11 +79,11 @@ var unpackFields = (r) => {
     return r1
 }
 
-var isDuplicate = (r_buf, record) => {
+var doesExist = (r_buf, record) => {
     var r1 = unpackFields(record) // return of type Details
     var uname = r_buf.record.split('|')[1]
 
-    for(let i=0;i<r1.length;i++){
+    for(let i=0;i<r1.length;i++) {
         if(uname===r1[i].username)
           return true
     }
@@ -95,11 +95,11 @@ var insertRecord = () => {
     // let url = document.getElementById("url").value
     // let username = document.getElementById("username").value
     // let password = document.getElementById("password").value
-    // let recordPos = hash(url)
+    let recordPos = hash(url)
     let url = 'amazon.com'
     let username = 'abcd@email.com'
     let password = '1234'
-    let recordPos = 4
+    // let recordPos = 4
     // d1.push(new Details(url, username, password))
     var r_buf = new Record(url+'|'+username+'|'+password)
 
@@ -111,7 +111,7 @@ var insertRecord = () => {
     }
     else {
         // check for duplicate entry
-        if(isDuplicate(r_buf, r[recordPos])) {
+        if(doesExist(r_buf, r[recordPos])) {
             console.log('Duplicate entries not allowed.')
             return
         }
