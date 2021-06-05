@@ -117,7 +117,7 @@ function isDuplicate(r_buf, record){
   return false
 }
 
-function deleteRecord = () => {
+function deleteRecord(){
   let url = 'www.amazon.com'
   let username = 'abc@email.com'
   //displayRecords
