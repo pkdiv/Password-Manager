@@ -9,7 +9,8 @@ const {
 // Record Structure
 // url|username|password$url|username|password$url|username|password\n
 // UI/datafile.txt
-const file = __dirname + 'datafile.txt'
+
+const file = '..\\Password-Manager\\datafile.txt'
 var fileDataline = []
 
 var Record = class {
@@ -33,7 +34,7 @@ function hash(webLink) {
   for (var i = 0; i < arr[1].length; i++) {
     id += arr[1].charCodeAt(i)
   }
-  id = id % 1000
+  id = id % 100
   return id
 }
 
@@ -45,7 +46,7 @@ function insertRecord() {
   let url = 'www.amazon.com'
   let username = 'abcd@email.com'
   let password = '1234'
-  let recordPos = 4
+  let recordPos = hash(url)
   var r_buf = new Bucket(url + '|' + username + '|' + password) // Converts user input into a bucket object
 
   unpackBuckets()
@@ -58,7 +59,11 @@ function insertRecord() {
       return
     }
     fileDataline[recordPos].bucket = fileDataline[recordPos].bucket.replace(/(\r?\n)|(\r)|(\n)/g, ''); // Handles weird characters
-    fileDataline[recordPos].bucket += '$' + r_buf.bucket
+
+    if(fileDataline[recordPos].bucket === '\n')
+      fileDataline[recordPos].bucket += r_buf.bucket
+    else
+      fileDataline[recordPos].bucket += '$' + r_buf.bucket
   }
 
   packBuckets()
@@ -98,7 +103,7 @@ function packBuckets() {
 
 function packFields(records) {
   let bucketBuffer = ''
-  for (i = 0; i < n; i++) {
+  for (i = 0; i < records.length; i++) {
     if (records[i].username === '')
       continue
     bucketBuffer += records[i].url + '|' + records[i].username + '|' + records[i].password + '$'
@@ -117,9 +122,9 @@ function isDuplicate(r_buf, record){
   return false
 }
 
-function deleteRecord = () => {
+function deleteRecord() {
   let url = 'www.amazon.com'
-  let username = 'abc@email.com'
+  let username = 'abcd@email.com'
   //displayRecords
   let id = hash(url)
 
@@ -133,9 +138,14 @@ function deleteRecord = () => {
       // delete record[i]
       records[i].username = ""
       // pack each detail object into one bucket
-      packRecords()
+      var bucketBuffer = packFields(records)
+      fileDataline[id] = bucketBuffer
+      packBuckets()
+      console.log('Record deleted.')
+      return
     }
   }
+  console.log('Username does not exist.')
 }
 
 function searchRecord(url, username) {
