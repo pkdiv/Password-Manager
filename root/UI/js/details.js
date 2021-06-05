@@ -156,10 +156,18 @@ function searchRecord(url, username) {
 }
 
 function modifyRecord() {
+deleteRecord()
+insertRecord()
 
 }
 
-function displayRecords(bucket) {
-  var records = unpackBuckets(bucket)
+function displayRecords() {
+  var buckets = unpackBuckets()
+  for (i = 0 ; i< buckets.length ; i++){
+      var record = unpackFields(records[i])
+      for (j = 0; j < record.length; j++){
+        console.log(record[i].username + "\t" + record[i].password + "\t" + record[i].password );
+      }
+  }
 
 }
