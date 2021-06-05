@@ -21,7 +21,7 @@ var Record = class {
 }
 
 var Bucket = class {
-  constructor(record) {
+  constructor(bucket) {
     this.bucket = bucket
   }
 }
@@ -136,6 +136,23 @@ function deleteRecord = () => {
       packRecords()
     }
   }
+}
+
+function searchRecord(url, username) {
+  let id = hash(url)
+  unpackBuckets()
+
+  let bucket = fileDataline[id]
+  let records = unpackFields(bucket)
+
+  for(i = 0; i < records.length; i++) {
+    if(username === records[i].username) {
+      console.log('Record found!')
+      console.log(`Username: ${records[i].username}\nPassword: ${records[i].password}`)
+      return
+    }
+  }
+  console.log('Record does not exist!')
 }
 
 function modifyRecord() {
