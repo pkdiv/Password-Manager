@@ -6,41 +6,21 @@
   </head>
   <body>
     <form>
-      <label for="">url</label>
-      <input id=url type="text" name="url" value="">
-      <label for="">username</label>
-      <input id=username type="" name="" value="">
-      <label for="">password</label>
-      <input id=password type="password" name="" value="">
-      <button type="submit" name="button" onclick="insertRecord()">Add</button>
-    </form>
-    <form >
-      <label>url</label>
-      <input type="text"  name="" value="">
-      <button type="submit" onclick="search()" name="button">Search</button>
-    </form>
-    <form >
-      <span>Search</span>
+      <label for="">New URL : </label>
+      <input id="newUrl" type="text" name="" value="">
+      <label for="">New Username : </label>
+      <input id="newName" type="text" name="" value="">
+      <label for="">New Password : </label>
+      <input id="newPass" type="text" name="" value="">
+      <button type="button" onclick="insertRecord()">Insert</button>
       <br>
-      <label for="">Url</label>
-      <input type="text" name="" value="">
+      <label for="">Old URL : </label>
+      <input id="oldUrl" type="text" name="" value="">
+      <label for="">Old Username : </label>
+      <input id="oldName" type="text" name="" value="">
+      <button type="button" onclick="deleteRecord()">Delete</button>
       <br>
-      <span>New data</span>
-      <br>
-      <label>Url</label>
-      <input type="type">
-      <label for="">username</label>
-      <input id=username type="" name="" value="">
-      <label for="">password</label>
-      <input id=password type="password" name="" value="">
-      <button type="submit" onclick="modify()" name="button">Modify</button>
-    </form>
-    <form>
-      <span>Delete</span>
-      <br>
-      <label for="">url</label>
-      <input id=username type="" name="" value="">
-      <button type="button" onclick="delete()" name="button">Delete</button>
+      <button type="button" name="button" onclick="modifyRecord()">Modify</button>
     </form>
   </body>
 </html>

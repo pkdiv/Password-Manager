@@ -39,14 +39,14 @@ function hash(webLink) {
 }
 
 function insertRecord() {
-  // let url = document.getElementById("url").value
-  // let username = document.getElementById("username").value
-  // let password = document.getElementById("password").value
-  // let recordPos = hash(url)
-  let url = 'www.amazon.com'
-  let username = 'abcd@email.com'
-  let password = '1234'
+  let url = document.getElementById("newUrl").value
+  let username = document.getElementById("newName").value
+  let password = document.getElementById("newPass").value
   let recordPos = hash(url)
+  // let url = 'www.amazon.com'
+  // let username = 'abcd@email.com'
+  // let password = '1234'
+  // let recordPos = hash(url)
   var r_buf = new Bucket(url + '|' + username + '|' + password) // Converts user input into a bucket object
 
   unpackBuckets()
@@ -105,6 +105,7 @@ function packFields(records) {
   let bucketBuffer = ''
   for (i = 0; i < records.length; i++) {
     if (records[i].username === '')
+    bucketBuffer = "\n"
       continue
     bucketBuffer += records[i].url + '|' + records[i].username + '|' + records[i].password + '$'
   }
@@ -123,9 +124,8 @@ function isDuplicate(r_buf, record){
 }
 
 function deleteRecord() {
-  let url = 'www.amazon.com'
-  let username = 'abcd@email.com'
-  //displayRecords
+  let url = document.getElementById('oldUrl').value
+  let username = document.getElementById('oldName').value
   let id = hash(url)
 
   unpackBuckets()
@@ -166,18 +166,19 @@ function searchRecord(url, username) {
 }
 
 function modifyRecord() {
-deleteRecord()
-insertRecord()
-
+  deleteRecord()
+  insertRecord()
 }
 
 function displayRecords() {
-  var buckets = unpackBuckets()
+  unpackBuckets()
+  var buckets = fileDataline
   for (i = 0 ; i< buckets.length ; i++){
-      var record = unpackFields(records[i])
+      var record = unpackFields(buckets[i])
       for (j = 0; j < record.length; j++){
-        console.log(record[i].username + "\t" + record[i].password + "\t" + record[i].password );
+        if(record[j].password){
+          console.log(record[j].url + "\t" + record[j].username + "\t" + record[j].password );
+        }
       }
   }
-
 }
