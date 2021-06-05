@@ -14,20 +14,22 @@ function createWindow(){
             nodeIntegration: true,
             contextIsolation: false,
             enableRemoteModule: true
-        }
+        },
+        // height: 600,
+        // width:1100,
+        minWidth:1100,
+        minHeight:600
   });
 
   win.loadURL(url.format({
     pathname: path.join(__dirname, '../UI/ui.html'),
     protocol: 'file',
-    slashes: true,
-    width:800,
-    height:800
+    slashes: true
   }));
 
 // Developer tools
 // TODO: Remove before packaging
-  win.webContents.openDevTools();
+  // win.webContents.openDevTools();
 
 
   win.on('closed', ()=> {

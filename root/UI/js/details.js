@@ -39,9 +39,9 @@ function hash(webLink) {
 }
 
 function insertRecord() {
-  let url = document.getElementById("newUrl").value
-  let username = document.getElementById("newName").value
-  let password = document.getElementById("newPass").value
+  let url = document.getElementById("iurl").value
+  let username = document.getElementById("iusername").value
+  let password = document.getElementById("ipassword").value
   let recordPos = hash(url)
   // let url = 'www.amazon.com'
   // let username = 'abcd@email.com'
@@ -124,8 +124,8 @@ function isDuplicate(r_buf, record){
 }
 
 function deleteRecord() {
-  let url = document.getElementById('oldUrl').value
-  let username = document.getElementById('oldName').value
+  let url = document.getElementById('durl').value
+  let username = document.getElementById('dusername').value
   let id = hash(url)
 
   unpackBuckets()
