@@ -140,12 +140,14 @@ function deleteRecord() {
   console.log('Username does not exist.')
 }
 
+
 function searchRecord(url, username) {
   let id = hash(url)
   unpackBuckets()
 
   let bucket = fileDataline[id]
   let records = unpackFields(bucket)
+
 
   for (i = 0; i < records.length; i++) {
     if (username === records[i].username) {
@@ -183,6 +185,7 @@ function modifyRecord() {
         console.log('Record Modified.')
         return
       }
+
     }
   }
 
