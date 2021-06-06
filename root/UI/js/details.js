@@ -39,15 +39,11 @@ function hash(webLink) {
 }
 
 function insertRecord() {
-  let url = document.getElementById("iurl").value
+  let url = document.getElementById("url").value
   let username = document.getElementById("iusername").value
   let password = document.getElementById("ipassword").value
   let recordPos = hash(url)
-  // let url = 'www.amazon.com'
-  // let username = 'abcd@email.com'
-  // let password = '1234'
-  // let recordPos = hash(url)
-  var r_buf = new Bucket(url + '|' + username + '|' + password) // Converts user input into a bucket object
+  var r_buf = new Bucket(url + '|' + username + '|' + password)
 
   unpackBuckets()
 
@@ -58,14 +54,12 @@ function insertRecord() {
       console.log('Duplicate entries not allowed.')
       return
     }
-    fileDataline[recordPos].bucket = fileDataline[recordPos].bucket.replace(/(\r?\n)|(\r)|(\n)/g, ''); // Handles weird characters
-
-    if(fileDataline[recordPos].bucket === '\n')
+    fileDataline[recordPos].bucket = fileDataline[recordPos].bucket.replace(/(\r?\n)|(\r)|(\n)/g, '');
+    if (fileDataline[recordPos].bucket == '')
       fileDataline[recordPos].bucket += r_buf.bucket
     else
       fileDataline[recordPos].bucket += '$' + r_buf.bucket
   }
-
   packBuckets()
 
 }
@@ -104,15 +98,14 @@ function packBuckets() {
 function packFields(records) {
   let bucketBuffer = ''
   for (i = 0; i < records.length; i++) {
-    if (records[i].username === '')
-    bucketBuffer = "\n"
-      continue
-    bucketBuffer += records[i].url + '|' + records[i].username + '|' + records[i].password + '$'
+    if (records[i].username != '') {
+      bucketBuffer += records[i].url + '|' + records[i].username + '|' + records[i].password + '$'
+    }
   }
   return bucketBuffer.slice(0, -1)
 }
 
-function isDuplicate(r_buf, record){
+function isDuplicate(r_buf, record) {
   var recordObjects = unpackFields(record) // return of type Details
   var uname = r_buf.bucket.split('|')[1]
 
@@ -124,7 +117,7 @@ function isDuplicate(r_buf, record){
 }
 
 function deleteRecord() {
-  let url = document.getElementById('durl').value
+  let url = document.getElementById('url').value
   let username = document.getElementById('dusername').value
   let id = hash(url)
 
@@ -135,11 +128,10 @@ function deleteRecord() {
 
   for (i = 0; i < records.length; i++) {
     if (username === records[i].username && url === records[i].url) {
-      // delete record[i]
       records[i].username = ""
-      // pack each detail object into one bucket
-      var bucketBuffer = packFields(records)
-      fileDataline[id] = bucketBuffer
+      let bucketBuffer = packFields(records)
+      console.log(bucketBuffer)
+      fileDataline[id] = new Bucket(bucketBuffer)
       packBuckets()
       console.log('Record deleted.')
       return
@@ -155,8 +147,8 @@ function searchRecord(url, username) {
   let bucket = fileDataline[id]
   let records = unpackFields(bucket)
 
-  for(i = 0; i < records.length; i++) {
-    if(username === records[i].username) {
+  for (i = 0; i < records.length; i++) {
+    if (username === records[i].username) {
       console.log('Record found!')
       console.log(`Username: ${records[i].username}\nPassword: ${records[i].password}`)
       return
@@ -166,19 +158,45 @@ function searchRecord(url, username) {
 }
 
 function modifyRecord() {
-  deleteRecord()
-  insertRecord()
+  let url = document.getElementById('url').value
+  let oldName = document.getElementById('ousername').value
+  let newName = document.getElementById('nusername').value
+  let pass = document.getElementById('password').value
+  let recordPos = hash(url)
+  unpackBuckets()
+  let bucket = fileDataline[recordPos]
+  let records = unpackFields(bucket)
+
+  if (!bucket) {
+    console.log("Record not found");
+  } else {
+    for(i=0; i < records.length; i++){
+      // console.log(ousername);
+      // console.log(records[i].username);
+      if(oldName == records[i].username && url == records[i].url){
+        records[i].username = newName
+        records[i].password = pass
+        console.log(records);
+        let bucketBuffer = packFields(records)
+        fileDataline[recordPos] = new Bucket(bucketBuffer)
+        packBuckets()
+        console.log('Record Modified.')
+        return
+      }
+    }
+  }
+
 }
 
 function displayRecords() {
   unpackBuckets()
   var buckets = fileDataline
-  for (i = 0 ; i< buckets.length ; i++){
-      var record = unpackFields(buckets[i])
-      for (j = 0; j < record.length; j++){
-        if(record[j].password){
-          console.log(record[j].url + "\t" + record[j].username + "\t" + record[j].password );
-        }
+  for (i = 0; i < buckets.length; i++) {
+    var record = unpackFields(buckets[i])
+    for (j = 0; j < record.length; j++) {
+      if (record[j].password) {
+        console.log(record[j].url + "\t" + record[j].username + "\t" + record[j].password);
       }
+    }
   }
 }
