@@ -147,16 +147,18 @@ function searchRecord() {
   unpackBuckets()
 
   let bucket = fileDataline[id]
-  if(!bucket){
-    console.log("Record not found");
+  if(!bucket || bucket.bucket === '\n'){
+    console.log("URL not found");
     return
   }
   let records = unpackFields(bucket)
   console.log(records.length);
 
   for (i = 0; i < records.length; i++) {
-      console.log('Record found!')
-      console.log(`Username: ${records[i].username}\nPassword: ${records[i].password}`)
+      if(records[i]) {
+          console.log('Record found!')
+          console.log(`Username: ${records[i].username}\nPassword: ${records[i].password}`)
+      }
   }
 }
 
@@ -211,7 +213,7 @@ function disTable(records){
   var tableRow = document.createElement("tr")
   var tableheader = document.createElement("th")
 
-for(i=0l i < columnHeader.length; i++){
+for(i=0; i < columnHeader.length; i++){
   tableheader.value = columnHeader[i]
   tableRow.appendChild(tablehaeder)
 }
