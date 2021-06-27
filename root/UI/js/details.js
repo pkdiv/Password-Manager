@@ -5,12 +5,13 @@ const {
   openSync,
   createWriteStream
 } = require('fs');
+const path = require('path');
 
 // Record Structure
 // url|username|password$url|username|password$url|username|password\n
 // UI/datafile.txt
 
-const file = '..\\Password-Manager\\datafile.txt'
+const file = path.join(__dirname, '../credentials/userfiles/datafile.txt')
 var fileDataline = []
 
 var Record = class {
@@ -141,22 +142,25 @@ function deleteRecord() {
 }
 
 
-function searchRecord(url, username) {
+function searchRecord() {
+  let url = document.getElementById("search-query").value
   let id = hash(url)
   unpackBuckets()
 
   let bucket = fileDataline[id]
+  if(!bucket || bucket.bucket === '\n'){
+    console.log("URL not found");
+    return
+  }
   let records = unpackFields(bucket)
-
+  console.log(records.length);
 
   for (i = 0; i < records.length; i++) {
-    if (username === records[i].username) {
-      console.log('Record found!')
-      console.log(`Username: ${records[i].username}\nPassword: ${records[i].password}`)
-      return
-    }
+      if(records[i]) {
+          console.log('Record found!')
+          console.log(`Username: ${records[i].username}\nPassword: ${records[i].password}`)
+      }
   }
-  console.log('Record does not exist!')
 }
 
 function modifyRecord() {
@@ -202,4 +206,20 @@ function displayRecords() {
       }
     }
   }
+}
+
+function disTable(records){
+  var columnHeader = ['username', 'Password']
+  var table = document.createElement("table")
+  var tableRow = document.createElement("tr")
+  var tableheader = document.createElement("th")
+
+for(i=0; i < columnHeader.length; i++){
+  tableheader.value = columnHeader[i]
+  tableRow.appendChild(tablehaeder)
+}
+
+table.appendChild(tableRow)
+
+
 }
