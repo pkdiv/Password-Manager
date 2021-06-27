@@ -1,9 +1,10 @@
 const electron = require('electron');
-const {readFileSync, writeFile, appendFileSync} = require('fs')
+const {readFileSync, writeFile, appendFileSync} = require('fs');
 const path = require('path');
 const url = require('url');
 
 const app = electron.app;
+const ipcMain = electron.ipcMain;
 const BrowserWindow = electron.BrowserWindow;
 
 let win;
@@ -29,7 +30,7 @@ function createWindow(){
 
 // Developer tools
 // TODO: Remove before packaging
-  // win.webContents.openDevTools();
+  win.webContents.openDevTools();
 
 
   win.on('closed', ()=> {
@@ -43,3 +44,7 @@ function createWindow(){
     if(process.platform !== 'darwin')
     app.quit()
   });
+
+ipcMain.on("passwordHash", (event, arg) =>{
+  console.log(arg);
+})
