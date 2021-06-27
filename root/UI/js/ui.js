@@ -1,10 +1,11 @@
 const ipcRenderer = require('electron').ipcRenderer;
 const fs = require('fs');
 const sha1 = require('sha1');
+const path = require('path');
 
 var usernames = []
 var passwords = []
-const filename = "..\\Password-Manager\\credentials.txt"
+const filename = path.join(__dirname, '../credentials/credentials.txt')
 
 
 
