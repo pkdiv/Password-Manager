@@ -5,12 +5,13 @@ const {
   openSync,
   createWriteStream
 } = require('fs');
+const path = require('path');
 
 // Record Structure
 // url|username|password$url|username|password$url|username|password\n
 // UI/datafile.txt
 
-const file = '..\\Password-Manager\\datafile.txt'
+const file = path.join(__dirname, '../credentials/userfiles/datafile.txt')
 var fileDataline = []
 
 var Record = class {

@@ -5,7 +5,7 @@ const path = require('path');
 
 var usernames = []
 var passwords = []
-const filename = "..\\Password-Manager\\credentials.txt"
+const filename = path.join(__dirname, '../credentials/credentials.txt')
 
 
 // ipcRenderer.send("msg-1", 'hello')
