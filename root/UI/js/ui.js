@@ -1,11 +1,11 @@
 const ipcRenderer = require('electron').ipcRenderer;
 const fs = require('fs');
 const sha1 = require('sha1');
+const path = require('path');
 
 var usernames = []
 var passwords = []
 const filename = "..\\Password-Manager\\credentials.txt"
-
 
 
 // ipcRenderer.send("msg-1", 'hello')
