@@ -31,7 +31,7 @@ function signUp(){
     console.log("Password does not match");
   }
   passPath = path.join(__dirname, '../credentials/userfiles/' + userfile)
-  fs.writeFileSync(passPath, 'utf-8');
+  fs.writeFileSync(passPath);
 
 
 }
