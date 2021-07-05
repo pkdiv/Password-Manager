@@ -4,17 +4,26 @@
     <meta charset="utf-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/signup.css">
     <script src="./js/signup.js" charset="utf-8"></script>
   </head>
   <body>
-    <form class="" action="index.html" method="post">
-      <label for="">Username</label>
-      <input id="user-sgn" type="text" name="" value="" placeholder="Username">
-      <label for="">Password</label>
-      <input id="pass-sgn" type="password" name="" value="">
-      <label for="">Confirm Password</label>
-      <input id="cfrm-pass-sgn" type="password" name="" value="">
-    </form>
+    <div class="input-group flex-nowrap mod-inp">
+      <span class="input-group-text" >Username</span>
+      <input type="text" class="form-control" id="user-sgn" aria-label="Username" aria-describedby="addon-wrapping">
+    </div>
+
+    <div class="input-group flex-nowrap mod-inp-password">
+      <span class="input-group-text" >Password</span>
+      <input type="password" class="form-control" id="pass-sgn" aria-label="password" aria-describedby="addon-wrapping">
+    </div>
+
+    <div class="input-group flex-nowrap mod-inp-password">
+      <span class="input-group-text" >Password</span>
+      <input type="password" class="form-control" id="cfrm-pass-sgn" aria-label="password" aria-describedby="addon-wrapping">
+    </div>
+
+  <button type="button" class="btn btn-primary mod-btn" onclick="signUp()">Sign In</button>
 
   </body>
 </html>

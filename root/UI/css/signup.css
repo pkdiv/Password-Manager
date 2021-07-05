@@ -1,0 +1,18 @@
+body{
+  text-align: center;
+
+}
+
+.mod-inp{
+  width: 30rem;
+  margin: 5rem auto 2rem;
+}
+
+.mod-inp-password{
+  width: 30rem;
+  margin: 3rem auto 2rem;
+}
+
+.mod-btn{
+  margin-top: 3rem;
+}

@@ -4,7 +4,7 @@ const path = require('path');
 
 
 
-const file = path.join(__dirname, '../credentials/mainCred.txt')
+const file = path.join(__dirname, '../credentials/credentials.txt')
 var passPath
 var usernames = []
 var passwords = []
@@ -31,7 +31,7 @@ function signUp(){
     console.log("Password does not match");
   }
   passPath = path.join(__dirname, '../credentials/userfiles/' + userfile)
-  fs.writeFileSync(passPath);
+  fs.writeFileSync(passPath, "");
 
 
 }
