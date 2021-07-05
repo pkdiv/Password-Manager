@@ -21,14 +21,15 @@ function checkCred(){
     if (logUsername == usernames[i] && passHash == passwords[i] ){
       ipcRenderer.send("passwordHash", logPassword)
       flag = 1
+      window.location.href = "./home.html"
       break
     }
   }
+
   if(flag == 0){
     console.log("Password not found");
   }
 }
-
 
 
 function unpack() {
@@ -39,3 +40,8 @@ function unpack() {
     passwords[record] = cred[record].split('|')[1].replace(/(\r?\n)|(\r)|(\n)/g, '');
   }
 }
+
+
+// function demo(){
+//   window.location.href = "https://www.google.com";
+// }
