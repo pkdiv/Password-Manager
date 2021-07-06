@@ -6,12 +6,23 @@ const {
   createWriteStream
 } = require('fs');
 const path = require('path');
+const ipcRenderer = require('electron').ipcRenderer
+const cryptr = require('cryptr')
 
 // Record Structure
 // url|username|password$url|username|password$url|username|password\n
 // UI/datafile.txt
 
-const file = path.join(__dirname, '../credentials/userfiles/datafile.txt')
+// encrypt password -> using Hash(mainPassword)
+
+var userfileName;
+var password;
+ipcRenderer.on("creds", (event, args) =>{
+  userfileName = args.split("|")[0]
+  password = args.split("|")[1]
+})
+
+const file = path.join(__dirname, '../credentials/userfiles/' + userfileName)
 var fileDataline = []
 
 var Record = class {

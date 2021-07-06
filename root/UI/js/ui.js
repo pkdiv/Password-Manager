@@ -19,7 +19,7 @@ function checkCred(){
 
   for(var i = 0 ; i< usernames.length; i++){
     if (logUsername == usernames[i] && passHash == passwords[i] ){
-      ipcRenderer.send("passwordHash", logPassword)
+      ipcRenderer.send("creds",logUsername+'|'+passHash)
       flag = 1
       window.location.href = "./home.html"
       break
