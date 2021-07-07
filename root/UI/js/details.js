@@ -7,7 +7,6 @@ const {
 } = require('fs');
 const path = require('path');
 const ipcRenderer = require('electron').ipcRenderer
-const Cryptr = require('cryptr')
 
 // Record Structure
 // url|username|password$url|username|password$url|username|password\n
@@ -18,7 +17,6 @@ const Cryptr = require('cryptr')
 var mainCreds = ipcRenderer.sendSync('pass', "send me the password")
 var userfileName = mainCreds.split("|")[0]
 var mainPassword = mainCreds.split("|")[1]
-var cryptr = new Cryptr(mainPassword)
 
 
 const file = path.join(__dirname, '../credentials/userfiles/' + userfileName + '.txt')
@@ -54,7 +52,7 @@ function insertRecord() {
   let username = document.getElementById("iusername").value
   let password = document.getElementById("ipassword").value
   let recordPos = hash(url)
-  var r_buf = new Bucket(url + '|' + username + '|' + cryptr.encrypt(password))
+  var r_buf = new Bucket(url + '|' + username + '|' + password)
 
   unpackBuckets()
 
@@ -89,7 +87,11 @@ function unpackFields(bkt) {
 
   for (let i = 0; i < rawRecords.length; i++) {
     var fields = rawRecords[i].split('|')
-    var newRecord = new Record(fields[0], fields[1], cryptr.decrypt(fields[2]))
+    // console.log(fields)
+    if(fields.length<3)
+      var newRecord = ''
+    else
+      var newRecord = new Record(fields[0], fields[1], fields[2])
     recObjectArray.push(newRecord) // Array of json objects(Record class objects)
   }
   return recObjectArray
