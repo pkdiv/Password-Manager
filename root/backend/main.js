@@ -50,4 +50,7 @@ ipcMain.on("creds", (event, arg) =>{
   record = arg;
 })
 
-ipcMain.send('creds', record)
+ipcMain.on('pass', (event, arg) => {
+  console.log(arg)  // prints "ping"
+  event.returnValue = record;
+})
