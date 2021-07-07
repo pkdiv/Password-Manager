@@ -7,7 +7,7 @@ const {
 } = require('fs');
 const path = require('path');
 const ipcRenderer = require('electron').ipcRenderer
-
+const CryptoJS = require('crypto-js')
 // Record Structure
 // url|username|password$url|username|password$url|username|password\n
 // UI/datafile.txt
@@ -52,7 +52,7 @@ function insertRecord() {
   let username = document.getElementById("iusername").value
   let password = document.getElementById("ipassword").value
   let recordPos = hash(url)
-  var r_buf = new Bucket(url + '|' + username + '|' + password)
+  var r_buf = new Bucket(url + '|' + username + '|' + CryptoJS.AES.encrypt(password, mainPassword))
 
   unpackBuckets()
 
@@ -91,7 +91,7 @@ function unpackFields(bkt) {
     if(fields.length<3)
       var newRecord = ''
     else
-      var newRecord = new Record(fields[0], fields[1], fields[2])
+      var newRecord = new Record(fields[0], fields[1], CryptoJS.AES.decrypt(fields[2], mainPassword).toString(CryptoJS.enc.Utf8))
     recObjectArray.push(newRecord) // Array of json objects(Record class objects)
   }
   return recObjectArray
@@ -112,7 +112,7 @@ function packFields(records) {
   let bucketBuffer = ''
   for (i = 0; i < records.length; i++) {
     if (records[i].username != '') {
-      bucketBuffer += records[i].url + '|' + records[i].username + '|' + records[i].password + '$'
+      bucketBuffer += records[i].url + '|' + records[i].username + '|' + CryptoJS.AES.encrypt(records[i].password, mainPassword).toString() + '$'
     }
   }
   return bucketBuffer.slice(0, -1)
