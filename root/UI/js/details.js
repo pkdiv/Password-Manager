@@ -6,8 +6,10 @@ const {
   createWriteStream
 } = require('fs');
 const path = require('path');
+
 const ipcRenderer = require('electron').ipcRenderer
 const CryptoJS = require('crypto-js')
+
 // Record Structure
 // url|username|password$url|username|password$url|username|password\n
 // UI/datafile.txt

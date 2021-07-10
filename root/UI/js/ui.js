@@ -19,6 +19,7 @@ function checkCred(){
 
   for(var i = 0 ; i< usernames.length; i++){
     if (logUsername == usernames[i] && passHash == passwords[i] ){
+
       ipcRenderer.send("creds",logUsername+'|'+passHash)
       flag = 1
       window.location.href = "./home.html"
@@ -40,8 +41,3 @@ function unpack() {
     passwords[record] = cred[record].split('|')[1].replace(/(\r?\n)|(\r)|(\n)/g, '');
   }
 }
-
-
-// function demo(){
-//   window.location.href = "https://www.google.com";
-// }
