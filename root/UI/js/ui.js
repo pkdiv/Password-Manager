@@ -8,7 +8,6 @@ var passwords = []
 const filename = path.join(__dirname, '../credentials/credentials.txt')
 
 
-
 // ipcRenderer.send("msg-1", 'hello')
 
 function checkCred(){
@@ -20,16 +19,18 @@ function checkCred(){
 
   for(var i = 0 ; i< usernames.length; i++){
     if (logUsername == usernames[i] && passHash == passwords[i] ){
-      ipcRenderer.send("passwordHash", logPassword)
+
+      ipcRenderer.send("creds",logUsername+'|'+passHash)
       flag = 1
+      window.location.href = "./home.html"
       break
     }
   }
+
   if(flag == 0){
     console.log("Password not found");
   }
 }
-
 
 
 function unpack() {

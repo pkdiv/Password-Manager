@@ -8,6 +8,7 @@ const ipcMain = electron.ipcMain;
 const BrowserWindow = electron.BrowserWindow;
 
 let win;
+var record;
 
 function createWindow(){
   win = new BrowserWindow({
@@ -45,6 +46,13 @@ function createWindow(){
     app.quit()
   });
 
-ipcMain.on("passwordHash", (event, arg) =>{
-  console.log(arg);
+
+ipcMain.on("creds", (event, arg) =>{
+  record = arg;
+})
+
+ipcMain.on('pass', (event, arg) => {
+  console.log(arg)  // prints "ping"
+  event.returnValue = record;
+
 })

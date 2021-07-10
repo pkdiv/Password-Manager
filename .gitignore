@@ -1,4 +1,4 @@
 /node_modules/*
 /datafile.txt
-/root/UI/js*
-/datafile.txt
+**/*.json
+**/*.txt
