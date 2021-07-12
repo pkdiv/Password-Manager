@@ -168,6 +168,7 @@ function searchRecord() {
   }
   let records = unpackFields(bucket)
   console.log(records.length);
+  displaySearchResults(records)
 
   for (i = 0; i < records.length; i++) {
       if(records[i]) {
@@ -237,3 +238,53 @@ table.appendChild(tableRow)
 
 
 }
+
+function displaySearchResults(records){
+//     var elementStart = `<div class="col">
+//       <div class="card shadow-sm">
+//         <div class="card-body">
+//           <p class="card-text">`
+//
+//   var elemetEnd = `</p>
+// </div>
+// </div>
+// </div>`
+// var element=""
+//     for(i=0; i< records.length; i++){
+//
+//       element += elementStart + `Username: ${records[i].username} <br> Password: ${records[i].password}` + elemetEnd
+//     }
+//     console.log(element);
+//     document.getElementById('search').innerHTML = element
+//     document.getElementById('search-1').innerHTML = element
+
+var rowStart = `<div id="search-temp" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 search-results">`
+var rowEnd = `</div>`
+var columnStart = `<div class="col">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <p class="card-text">`
+var columnEnd = `</p>
+</div>
+</div>
+</div>
+`
+var index = 0
+var displayResults = ""
+var numberOfRows = Math.ceil(records.length / 3)
+for(row = 0 ; row < numberOfRows; row++){
+  var element = rowStart
+  for (var col = index; col < records.length; col++) {
+    element += columnStart +  `Username: ${records[col].username} <br> Password: ${records[col].password}` + columnEnd
+  }
+  index = col
+  element += rowEnd
+  displayResults += element
+}
+
+document.getElementById('search').innerHTML = displayResults
+
+}
+
+
+module.exports = {searchRecord}
