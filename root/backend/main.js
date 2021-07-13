@@ -52,7 +52,7 @@ ipcMain.on("creds", (event, arg) =>{
 })
 
 ipcMain.on('pass', (event, arg) => {
-  console.log(arg)  // prints "ping"
+  // console.log(arg)  // prints "ping"
   event.returnValue = record;
 
 })

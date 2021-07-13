@@ -19,7 +19,7 @@ function signUp(){
   unpack()
   for(var i=0; i<usernames.length; i++){
     if(username == usernames[i]){
-      options = {type: 'info',message:'User already exists!',buttons: ['Okay']}
+      options = {type: 'question',message:'User already exists!',buttons: ['Okay'], title: 'Info'}
       dialog.showMessageBox(null, options, (response) => {
         console.log(response);
       });
@@ -31,7 +31,7 @@ function signUp(){
     var buffer = username + "|" + sha1(password) + '\n'
     fs.appendFileSync(file, buffer, 'utf-8')
   }else{
-    options = {type: 'info',message:'Passwords do not match!',buttons: ['Okay']}
+    options = {type: 'info',message:'Passwords do not match!',buttons: ['Okay'], title: 'Info'}
     dialog.showMessageBox(null, options, (response) => {
       console.log(response);
     });

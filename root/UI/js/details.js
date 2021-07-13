@@ -62,7 +62,7 @@ function insertRecord() {
     fileDataline[recordPos] = new Bucket(r_buf.bucket)
   } else {
     if (isDuplicate(r_buf, fileDataline[recordPos])) {
-      options = {type: 'info',message:'Duplicate entries not allowed!',buttons: ['Okay']}
+      options = {type: 'info',message:'Duplicate entries not allowed!',buttons: ['Okay'], title: 'Info'}
       dialog.showMessageBox(null, options, (response) => {
         console.log(response);
       });
@@ -75,6 +75,10 @@ function insertRecord() {
       fileDataline[recordPos].bucket += '$' + r_buf.bucket
   }
   packBuckets()
+  options = {type: 'info',message:'Record inserted!',buttons: ['Okay'], title: 'Info'}
+  dialog.showMessageBox(null, options, (response) => {
+    console.log(response);
+  });
 
 }
 
@@ -151,14 +155,14 @@ function deleteRecord() {
       // console.log(bucketBuffer)
       fileDataline[id] = new Bucket(bucketBuffer)
       packBuckets()
-      options = {type: 'info',message:'Record deleted!',buttons: ['Okay']}
+      options = {type: 'info',message:'Record deleted!',buttons: ['Okay'], title: 'Info'}
       dialog.showMessageBox(null, options, (response) => {
         console.log(response);
       });
       return
     }
   }
-  options = {type: 'info',message:'Username does not exist!',buttons: ['Okay']}
+  options = {type: 'info',message:'Username does not exist!',buttons: ['Okay'], title: 'Info'}
   dialog.showMessageBox(null, options, (response) => {
     console.log(response);
   });
@@ -172,7 +176,7 @@ function searchRecord() {
 
   let bucket = fileDataline[id]
   if(!bucket || bucket.bucket === '\n'){
-    options = {type: 'info',message:'URL not found!',buttons: ['Okay']}
+    options = {type: 'info',message:'URL not found!',buttons: ['Okay'], title: 'Info'}
     dialog.showMessageBox(null, options, (response) => {
       console.log(response);
     });
@@ -208,7 +212,7 @@ function modifyRecord() {
   let records = unpackFields(bucket)
 
   if (!bucket) {
-    options = {type: 'info',message:'Record not found!',buttons: ['Okay']}
+    options = {type: 'info',message:'Record not found!',buttons: ['Okay'], title: 'Info'}
     dialog.showMessageBox(null, options, (response) => {
       console.log(response);
     });
@@ -223,7 +227,7 @@ function modifyRecord() {
         let bucketBuffer = packFields(records)
         fileDataline[recordPos] = new Bucket(bucketBuffer)
         packBuckets()
-        options = {type: 'info',message:'Record modified!',buttons: ['Okay']}
+        options = {type: 'info',message:'Record modified!',buttons: ['Okay'], title: 'Info'}
         dialog.showMessageBox(null, options, (response) => {
           console.log(response);
         });

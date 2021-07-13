@@ -29,7 +29,7 @@ function checkCred(){
   }
 
   if(flag == 0){
-    options = {type: 'info',message:'Incorrect username or password!',buttons: ['Okay']}
+    options = {type: 'info',message:'Incorrect username or password!',buttons: ['Okay'], title: 'Info'}
     dialog.showMessageBox(null, options, (response) => {
       console.log(response);
     });
