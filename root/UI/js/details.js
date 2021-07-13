@@ -183,7 +183,7 @@ function searchRecord() {
     return
   }
   let records = unpackFields(bucket)
-  console.log(records);
+  // console.log(records);
   if(records != ""){
       displaySearchResults(records)
   }else{
