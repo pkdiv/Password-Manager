@@ -179,8 +179,15 @@ function searchRecord() {
     return
   }
   let records = unpackFields(bucket)
-  // console.log(records.length);
-  displaySearchResults(records)
+  console.log(records);
+  if(records != ""){
+      displaySearchResults(records)
+  }else{
+    document.getElementById('search').innerHTML = "<h1 style='text-align: center;'>Record not present</h1>"
+  }
+
+
+
 
   // for (i = 0; i < records.length; i++) {
   //     if(records[i]) {
@@ -258,23 +265,7 @@ table.appendChild(tableRow)
 }
 
 function displaySearchResults(records){
-//     var elementStart = `<div class="col">
-//       <div class="card shadow-sm">
-//         <div class="card-body">
-//           <p class="card-text">`
-//
-//   var elemetEnd = `</p>
-// </div>
-// </div>
-// </div>`
-// var element=""
-//     for(i=0; i< records.length; i++){
-//
-//       element += elementStart + `Username: ${records[i].username} <br> Password: ${records[i].password}` + elemetEnd
-//     }
-//     console.log(element);
-//     document.getElementById('search').innerHTML = element
-//     document.getElementById('search-1').innerHTML = element
+
 
 var rowStart = `<div id="search-temp" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 search-results">`
 var rowEnd = `</div>`
