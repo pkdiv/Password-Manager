@@ -1,7 +1,7 @@
 const fs = require('fs');
 const sha1 = require('sha1');
 const path = require('path');
-
+const {dialog} = require('electron').remote
 
 
 const file = path.join(__dirname, '../credentials/credentials.txt')
@@ -19,7 +19,10 @@ function signUp(){
   unpack()
   for(var i=0; i<usernames.length; i++){
     if(username == usernames[i]){
-      console.log("User exists");
+      options = {type: 'info',message:'User already exists!',buttons: ['Okay']}
+      dialog.showMessageBox(null, options, (response) => {
+        console.log(response);
+      });
       return
     }
   }
@@ -28,7 +31,10 @@ function signUp(){
     var buffer = username + "|" + sha1(password) + '\n'
     fs.appendFileSync(file, buffer, 'utf-8')
   }else{
-    console.log("Password does not match");
+    options = {type: 'info',message:'Passwords do not match!',buttons: ['Okay']}
+    dialog.showMessageBox(null, options, (response) => {
+      console.log(response);
+    });
   }
   passPath = path.join(__dirname, '../credentials/userfiles/' + userfile)
   fs.writeFileSync(passPath, "");

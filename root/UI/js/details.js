@@ -6,7 +6,7 @@ const {
   createWriteStream
 } = require('fs');
 const path = require('path');
-
+const {dialog} = require('electron').remote
 const ipcRenderer = require('electron').ipcRenderer
 const CryptoJS = require('crypto-js')
 
@@ -62,7 +62,10 @@ function insertRecord() {
     fileDataline[recordPos] = new Bucket(r_buf.bucket)
   } else {
     if (isDuplicate(r_buf, fileDataline[recordPos])) {
-      console.log('Duplicate entries not allowed.')
+      options = {type: 'info',message:'Duplicate entries not allowed!',buttons: ['Okay']}
+      dialog.showMessageBox(null, options, (response) => {
+        console.log(response);
+      });
       return
     }
     fileDataline[recordPos].bucket = fileDataline[recordPos].bucket.replace(/(\r?\n)|(\r)|(\n)/g, '');
@@ -145,14 +148,20 @@ function deleteRecord() {
     if (username === records[i].username && url === records[i].url) {
       records[i].username = ""
       let bucketBuffer = packFields(records)
-      console.log(bucketBuffer)
+      // console.log(bucketBuffer)
       fileDataline[id] = new Bucket(bucketBuffer)
       packBuckets()
-      console.log('Record deleted.')
+      options = {type: 'info',message:'Record deleted!',buttons: ['Okay']}
+      dialog.showMessageBox(null, options, (response) => {
+        console.log(response);
+      });
       return
     }
   }
-  console.log('Username does not exist.')
+  options = {type: 'info',message:'Username does not exist!',buttons: ['Okay']}
+  dialog.showMessageBox(null, options, (response) => {
+    console.log(response);
+  });
 }
 
 
@@ -163,19 +172,22 @@ function searchRecord() {
 
   let bucket = fileDataline[id]
   if(!bucket || bucket.bucket === '\n'){
-    console.log("URL not found");
+    options = {type: 'info',message:'URL not found!',buttons: ['Okay']}
+    dialog.showMessageBox(null, options, (response) => {
+      console.log(response);
+    });
     return
   }
   let records = unpackFields(bucket)
-  console.log(records.length);
+  // console.log(records.length);
   displaySearchResults(records)
 
-  for (i = 0; i < records.length; i++) {
-      if(records[i]) {
-          console.log('Record found!')
-          console.log(`Username: ${records[i].username}\nPassword: ${records[i].password}`)
-      }
-  }
+  // for (i = 0; i < records.length; i++) {
+  //     if(records[i]) {
+  //         console.log('Record found!')
+  //         console.log(`Username: ${records[i].username}\nPassword: ${records[i].password}`)
+  //     }
+  // }
 }
 
 function modifyRecord() {
@@ -189,7 +201,10 @@ function modifyRecord() {
   let records = unpackFields(bucket)
 
   if (!bucket) {
-    console.log("Record not found");
+    options = {type: 'info',message:'Record not found!',buttons: ['Okay']}
+    dialog.showMessageBox(null, options, (response) => {
+      console.log(response);
+    });
   } else {
     for(i=0; i < records.length; i++){
       // console.log(ousername);
@@ -201,7 +216,10 @@ function modifyRecord() {
         let bucketBuffer = packFields(records)
         fileDataline[recordPos] = new Bucket(bucketBuffer)
         packBuckets()
-        console.log('Record Modified.')
+        options = {type: 'info',message:'Record modified!',buttons: ['Okay']}
+        dialog.showMessageBox(null, options, (response) => {
+          console.log(response);
+        });
         return
       }
 

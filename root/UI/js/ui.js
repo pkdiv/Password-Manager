@@ -2,6 +2,7 @@ const ipcRenderer = require('electron').ipcRenderer;
 const fs = require('fs');
 const sha1 = require('sha1');
 const path = require('path');
+const {dialog} = require('electron').remote;
 
 var usernames = []
 var passwords = []
@@ -28,7 +29,10 @@ function checkCred(){
   }
 
   if(flag == 0){
-    console.log("Password not found");
+    options = {type: 'info',message:'Incorrect username or password!',buttons: ['Okay']}
+    dialog.showMessageBox(null, options, (response) => {
+      console.log(response);
+    });
   }
 }
 
