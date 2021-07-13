@@ -223,7 +223,7 @@ function modifyRecord() {
       if(oldName == records[i].username && url == records[i].url){
         records[i].username = newName
         records[i].password = pass
-        console.log(records);
+        // console.log(records);
         let bucketBuffer = packFields(records)
         fileDataline[recordPos] = new Bucket(bucketBuffer)
         packBuckets()
